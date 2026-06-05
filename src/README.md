@@ -1,63 +1,100 @@
-# Exercise 5 – Bowling Alley Infrastructure with THREE.js
+# Computer Graphics - Exercise 5 - WebGL Bowling Alley
 
-## Overview
-This exercise focuses on implementing the static infrastructure of a bowling alley scene using THREE.js. You will create the lane, pins, and bowling ball, but WITHOUT physics, animation, or interactive controls. This is the foundation for the next exercise (HW06) which will add the interactive elements.
+A static 3D bowling alley scene built with Three.js / WebGL. This exercise
+implements the full visual infrastructure (lane, pins, ball, lighting, and UI
+scaffolding). Interactive gameplay, physics, and scoring are reserved for HW06.
 
-## Tasks - HW05 INFRASTRUCTURE ONLY
-1. Add lane markings and gutters:
-   - Foul line (white/red line across lane width)
-   - Approach dots (two rows on approach area)
-   - Lane arrows/targeting arrows (~15 units from foul line)
-   - Gutters on both sides (slightly recessed channels)
-   - Approach area (different shade, behind foul line)
+## Group Members
 
-2. Create bowling pins (static):
-   - 10 pins in standard triangular formation (1-2-3-4 rows)
-   - Each pin with proper shape (wide body, narrow neck, rounded top)
-   - White with red stripe markings
-   - Pin deck area behind the pins
-   - Proper spacing (~1 unit center-to-center)
+* Zowde Adam
 
-3. Implement a static bowling ball:
-   - Sphere with glossy material
-   - Three finger holes on the surface
-   - Positioned on approach area
-   - Proper size relative to lane and pins
-   - NO physics or movement
+## How to Run
 
-4. Camera and lighting infrastructure:
-   - Interactive camera controls (orbit) - toggle with 'O' key
-   - Appropriate lighting with shadows
-   - Proper initial camera positioning (bowler's perspective)
+1. Make sure you have Node.js installed (LTS recommended).
+2. From the project root, install dependencies:
+   ```
+   npm install
+   ```
+3. Start the local web server:
+   ```
+   node index.js
+   ```
+4. Open your browser and go to: http://localhost:8000
 
-5. Basic UI framework preparation:
-   - HTML containers for future bowling scorecard display
-   - HTML containers for future controls display
-   - Basic CSS styling for UI elements
+## Controls
 
-## Technical Requirements
-- All objects should cast and receive shadows
-- Use appropriate meshes and materials for each object
-- The scene should be responsive when the browser window is resized
-- Bowling ball and pins must remain STATIC (no physics or movement)
+| Key | Action |
+| --- | ------ |
+| `O` | Toggle orbit camera on/off |
+| `1` | Camera preset: Bowler view (default, down the lane) |
+| `2` | Camera preset: Overhead view |
+| `3` | Camera preset: Pin close-up |
+| `4` | Camera preset: Ball view (on the approach) |
+| `5` | Camera preset: Side view (shows bench & ball return) |
 
-## IMPORTANT NOTE
-**Physics-based ball rolling, pin collision mechanics, interactive controls, and the scoring system will be implemented in the next exercise (HW06). Do NOT implement these features in HW05.**
+When orbit is enabled: left-drag to rotate, scroll to zoom, right-drag to pan.
 
-## Getting Started
-- The starter code already includes:
-  - Basic THREE.js setup with a scene, camera, and renderer
-  - A simple lane surface (light maple wood color)
-  - Lighting setup with shadows enabled
-  - Orbit controls for easy scene navigation (toggle with 'o' key)
+## What Is Implemented (HW05 Infrastructure)
 
-- Examine the `createBowlingLane()` function and build upon it
-- Use the `degrees_to_radians()` helper function for any rotation calculations
-- Add all your code to the hw5.js file
+**Bowling lane & markings**
+* Light maple, glossy lane surface (~3.5 x 60 units)
+* Separate approach area in a darker, less glossy shade
+* Red foul line across the full lane width
+* Two gutters running the full length, recessed below the lane surface
+* Two rows of approach dots
+* Seven targeting arrows in the standard chevron formation, ~15 units from the
+  foul line
 
-## Reference
-- Standard bowling lane: ~60ft long x 3.5ft wide (41.5 inches)
-- Bowling pin height: ~15 inches, max width ~4.7 inches
-- Bowling ball diameter: ~8.5 inches
-- Pin spacing: 12 inches center-to-center in equilateral triangle
-- Use different materials for different parts (MeshBasicMaterial for markings, MeshPhongMaterial for glossy surfaces)
+**Pins**
+* Ten pins in the regulation 1-2-3-4 triangular formation
+* Pin shape built with `THREE.LatheGeometry` (a 2D profile revolved around the
+  vertical axis to produce the classic base/belly/neck/head silhouette)
+* White body with a red band at the neck
+* Distinct darker pin-deck surface beneath the pins
+* Positions taken directly from the coordinates in the exercise instructions
+
+**Bowling ball**
+* Glossy sphere (radius 0.45) with a high-shininess material
+* Three finger holes (two adjacent, one offset) represented as small dark
+  cylinders flush with the surface
+* Positioned static on the approach area, centered on the lane
+
+**Camera & lighting**
+* Ambient + directional key light, plus a softer fill light
+* Shadows enabled; the directional light's shadow camera is enlarged to cover
+  the entire lane, with a 2048x2048 shadow map and soft (PCF) shadow edges
+* A floor plane grounds the scene and receives shadows
+* Orbit controls, toggleable with the `O` key
+* Sensible initial camera position looking down the lane
+
+**UI framework**
+* Scorecard container across the top with a 10-frame layout (empty, ready for
+  HW06 to populate)
+* Controls panel listing the available keys
+* Shared CSS styling for the UI panels
+
+## Additional Features (Bonus)
+
+* **Multiple camera preset positions** — keys `1`-`5` snap the camera to preset
+  views (bowler, overhead, pin close-up, ball, and a side view), making it easy
+  to inspect the scene from standard angles.
+* **Ball return track** — a rail/trough running the length of the lane plus a
+  return unit near the bowler, modelling where a returned ball would travel and
+  rest.
+* **Seating area** — a wooden bench (seat, backrest, legs) positioned behind the
+  approach, where a bowler would wait between turns.
+
+## Known Issues / Limitations
+
+* The finger holes are surface-flush cylinders rather than true drilled holes
+  (true CSG subtraction was avoided for simplicity and stability). They read
+  correctly from normal viewing angles.
+* No physics, collision, aiming, power meter, or scoring logic — these are
+  intentionally out of scope for HW05 and will be added in HW06.
+
+## External Assets
+
+* None. All geometry and materials are generated procedurally with Three.js
+  primitives (`BoxGeometry`, `CylinderGeometry`, `SphereGeometry`,
+  `LatheGeometry`, `ShapeGeometry`, `PlaneGeometry`). No external models,
+  textures, or images were used.
