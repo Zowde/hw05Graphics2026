@@ -78,9 +78,8 @@ When orbit is enabled: left-drag to rotate, scroll to zoom, right-drag to pan.
 * **Multiple camera preset positions** — keys `1`-`5` snap the camera to preset
   views (bowler, overhead, pin close-up, ball, and a side view), making it easy
   to inspect the scene from standard angles.
-* **Ball return track** — a rail/trough running the length of the lane plus a
-  return unit near the bowler, modelling where a returned ball would travel and
-  rest.
+* **Ball return track** — a rail/trough running alongside the lane plus a return
+  unit near the bowler, modelling where a returned ball would travel and rest.
 * **Seating area** — a wooden bench (seat, backrest, legs) positioned behind the
   approach, where a bowler would wait between turns.
 
