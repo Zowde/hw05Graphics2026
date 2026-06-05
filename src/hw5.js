@@ -54,10 +54,7 @@ scene.add(fillLight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; // softer shadow edges
 
-function degrees_to_radians(degrees) {
-  var pi = Math.PI;
-  return degrees * (pi/180);
-}
+
 
 // Floor plane under everything — catches shadows and grounds the scene
 function createFloor() {
